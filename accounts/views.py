@@ -7,10 +7,8 @@ from .models import *
 from django.contrib import messages
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate, login, logout
 def register(request):
-    '''
-    Authentication part for the register part
-    '''
     if request.method=='POST':
         fname=request.POST['fname']
         lname=request.POST['lname']
@@ -19,36 +17,69 @@ def register(request):
         password=request.POST['password']
         password1=request.POST['password1']
 
-        if password==password1:
-            if CustomUser.objects.filter(username==username).exits():
-                messages.error(request,'username is already taken!!')
+        if password == password1:
+            if CustomUser.objects.filter(username=username).exists():
+                messages.error(request,'username is already exists')
                 return redirect('register')
-            if CustomUser.objects.filter(email==email).exists():
+            
+            if CustomUser.objects.filter(email=email).exists():
                 messages.error(request,'email already exits')
                 return redirect('register')
+            
+
             if not re.search(r'[A-Z]',password):
-                messages.error(request,'Your password should atleast contain one uppercase letter!! ]')
+                messages.error(request,'Your password does not contain at least one uppercase')
                 return redirect('register')
-            if not re.search(r'/d',password):
-                messages.error(request,'Your password should contain atleast one digits')
+            
+            if not re.search(r"\d",password):
+                messages.error(request,'Your password does not contain at least one digit!!')
                 return redirect('register')
+            
             try:
                 validate_password(password)
-                CustomUser.objects.create_user(fistn_name=fname,last_name=lname,username=username,email=email,password=password)
-                messages.success(request,"Account created sucessfully!!")
+                CustomUser.objects.create_user(first_name=fname,last_name=lname,username=username,email=email,password=password)
+                messages.success(request,'Account Created Sucessfully!!')
                 return redirect('register')
             except ValidationError as e:
-                for i  in e.messages:
+                for i in e.messages:
                     messages.error(request,i)
                 return redirect('register')
         else:
-            messages.error(request,"Password and confirm password do not match")
-            return redirect('request')
-    return render(request,'accounts/register.html')
+            messages.error(request,'Password and Confirm Password does not match!!')
+            return redirect('register')
+
+    return render(request, 'accounts/register.html')
 
 def log_in(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         username=request.POST.get('username')
-    return render(request,'login.html')
+        password=request.POST.get('password')
+        remember_me = request.POST.get('remember_me')
 
 
+        if not CustomUser.objects.filter(username=username).exists():
+            messages.error(request,'username not register yet!!!')
+            return redirect('log_in')
+
+        user=authenticate(username=username,password=password)
+        if user is not None:
+            login(request,user)
+
+            if remember_me:
+                request.session.set_expiry(3600)
+            else:
+                request.session.set_expiry(0)
+            next =request.POST.get('next','')
+
+            return redirect(next if next else "index")
+        else:
+            messages.error(request,'Password in valid!!')
+            return redirect('log_in')
+        
+    next=request.GET.get('next','')
+
+    return render(request,'accounts/login.html',{'next':next})
+
+def log_out(request):
+    logout(request)
+    return redirect('log_in')

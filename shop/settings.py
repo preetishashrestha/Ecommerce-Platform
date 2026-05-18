@@ -41,12 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 ]
 EXTERNAL_APP=[
     'cloudinary',
     'cloudinary_storage',
     'core',
-    'accounts'
+    'accounts',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'social_django'
 ]
 
 INSTALLED_APPS.extend(EXTERNAL_APP)
@@ -59,7 +64,28 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
+
+LOGIN_URL="log_in"
+LOGIN_REDIRECT_URL ="index"
+LOGOUT_URL="log_out"
+LOGOUT_REDIRECT_URL ="log_in"
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+SOCIAL_AUTH_GITHUB_KEY = config('SOCIAL_AUTH_GITHUB_KEY') # Correct Client ID
+# SOCIAL_AUTH_GITHUB_KEY = 'Ov23li2HNxHUv8ZJsheM'
+SOCIAL_AUTH_GITHUB_SECRET = config('SOCIAL_AUTH_GITHUB_SECRET')
 
 ROOT_URLCONF = 'shop.urls'
 
@@ -149,3 +175,10 @@ cloudinary.config(
     api_secret=config('API_SECRET'),
     secure=True
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config('EMAIL_HOST')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')

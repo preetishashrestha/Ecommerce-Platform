@@ -88,7 +88,7 @@
                             <div class="line"></div>
                         </div>
                         <div class="social-icons">
-                            <button aria-label="Log in with Google" class="icon">
+                            <a href="{% url 'social:begin' 'google-oauth2' %}" class="icon"><button aria-label="Log in with Google" class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
                                     class="w-5 h-5 fill-current">
                                     <path
@@ -96,6 +96,7 @@
                                     </path>
                                 </svg>
                             </button>
+                            </a>
                             <button aria-label="Log in with Twitter" class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
                                     class="w-5 h-5 fill-current">
