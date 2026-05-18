@@ -129,37 +129,24 @@
                     <div class="sidebar-widget">
                         <h4 class="widget-title">Categories</h4>
                         <div class="accordion" id="catAccordion">
+                            {% for i in category %}
                             <div class="accordion-item">
                                 <h5 class="accordion-header">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#catSports">
-                                        <i class="fas fa-running me-2" style="color:var(--accent);font-size:13px"></i> Sportswear
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#{{i.id}}">
+                                        {{i.title}}
                                         <span class="ms-auto badge" style="background:var(--accent-light);color:var(--accent);font-size:10px;font-weight:600;border-radius:50px;padding:3px 8px;">5</span>
                                     </button>
                                 </h5>
-                                <div id="catSports" class="accordion-collapse collapse show" data-bs-parent="#catAccordion">
+                                <div id="{{i.id}}" class="accordion-collapse collapse" data-bs-parent="#catAccordion">
                                     <div class="accordion-body px-0 py-1">
-                                        <a href="#" class="sub-cat-link"><span>Nike</span><span class="count">(42)</span></a>
-                                        <a href="#" class="sub-cat-link"><span>Under Armour</span><span class="count">(36)</span></a>
-                                        <a href="#" class="sub-cat-link"><span>Adidas</span><span class="count">(28)</span></a>
-                                        <a href="#" class="sub-cat-link"><span>Puma</span><span class="count">(19)</span></a>
+                                        {% for j in i.subcategory_set.all %}
+                                          <a href="#" class="sub-cat-link"><span>{{j.title}}</span><span class="count">(42)</span></a>
+                                        {% endfor %}
+                            
                                     </div>
                                 </div>
                             </div>
-                            <div class="accordion-item" style="margin-top:4px">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#catMens">
-                                        <i class="fas fa-male me-2" style="color:var(--accent);font-size:13px"></i> Mens
-                                        <span class="ms-auto badge" style="background:var(--accent-light);color:var(--accent);font-size:10px;font-weight:600;border-radius:50px;padding:3px 8px;">10</span>
-                                    </button>
-                                </h5>
-                                <div id="catMens" class="accordion-collapse collapse" data-bs-parent="#catAccordion">
-                                    <div class="accordion-body px-0 py-1">
-                                        <a href="#" class="sub-cat-link"><span>Fendi</span><span class="count">(24)</span></a>
-                                        <a href="#" class="sub-cat-link"><span>Gucci</span><span class="count">(18)</span></a>
-                                        <a href="#" class="sub-cat-link"><span>Versace</span><span class="count">(12)</span></a>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
 
