@@ -3,11 +3,13 @@ Authentication part
 """
 import re
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import *
 from django.contrib import messages
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import PasswordChangeForm
 def register(request):
     if request.method=='POST':
         fname=request.POST['fname']
@@ -83,3 +85,13 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return redirect('log_in')
+
+@login_required(login_url='log_in')
+def password_change(request):
+    form=PasswordChangeForm(user=request.user)
+    if request.method == 'POST':
+        form=PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('log_in')
+    return render(request,'accounts/password_change.html',{'form':form})
