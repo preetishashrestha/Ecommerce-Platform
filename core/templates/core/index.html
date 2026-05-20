@@ -28,7 +28,7 @@
                             <div class="col-lg-6 animate-up">
                                 <span class="hero-label">New Arrival 2026</span>
                                 <h1>{{i.title}}</h1>
-                                <p>{{i.desc}}</p>
+                                <p>{{i.desc|safe}}</p>
                                 <div class="d-flex gap-3 flex-wrap">
                                     <a href="#" class="btn-primary-custom">Shop Now <i class="fas fa-arrow-right"></i></a>
                                     <a href="#" class="btn-outline-custom">View All</a>
@@ -134,13 +134,13 @@
                                 <h5 class="accordion-header">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#{{i.id}}">
                                         {{i.title}}
-                                        <span class="ms-auto badge" style="background:var(--accent-light);color:var(--accent);font-size:10px;font-weight:600;border-radius:50px;padding:3px 8px;">5</span>
+                                        <span class="ms-auto badge" style="background:var(--accent-light);color:var(--accent);font-size:10px;font-weight:600;border-radius:50px;padding:3px 8px;">{{i.count_sub}}</span>
                                     </button>
                                 </h5>
                                 <div id="{{i.id}}" class="accordion-collapse collapse" data-bs-parent="#catAccordion">
                                     <div class="accordion-body px-0 py-1">
                                         {% for j in i.subcategory_set.all %}
-                                          <a href="#" class="sub-cat-link"><span>{{j.title}}</span><span class="count">(42)</span></a>
+                                          <a href="#" class="sub-cat-link"><span>{{j.title}}</span><span class="count">{{j.product_count}}</span></a>
                                         {% endfor %}
                             
                                     </div>
@@ -210,7 +210,8 @@
                     <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
                 </div>
 
-                <div class="row g-3">
+                <div class="row g-3" >
+                    
                     <!-- Product 1 -->
                      {% for i in product %}
                     <div class="col-sm-6 col-xl-4">
