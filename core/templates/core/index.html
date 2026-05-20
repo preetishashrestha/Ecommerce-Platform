@@ -212,6 +212,7 @@
 
                 <div class="row g-3">
                     <!-- Product 1 -->
+                     {% for i in product %}
                     <div class="col-sm-6 col-xl-4">
                         <div class="product-card">
                             <div class="product-image-area">
@@ -221,132 +222,21 @@
                                     <button class="action-btn"><i class="fas fa-eye"></i></button>
                                     <button class="action-btn"><i class="fas fa-share-alt"></i></button>
                                 </div>
-                                <img src="{% static 'images/product-details/acer_2.png' %}" alt="Lenovo Legion">
+                                <img src="{{i.image.url}}" alt="Lenovo Legion">
                             </div>
                             <div class="product-body">
-                                <div class="brand-tag">Lenovo</div>
-                                <p class="product-title">Legion 5 Gaming Laptop 15.6" AMD Ryzen 7 GTX 1660Ti 16GB RAM</p>
+                                <div class="brand-tag">{{i.name}}</div>
+                                <p class="product-title">{{i.desc|safe|truncatewords:5}}</p>
                             </div>
                             <div class="product-footer">
-                                <div class="product-price">$1,020 <span class="original">$1,299</span></div>
+                                <div class="product-price">{{i.price}}<span class="original">{{i.marked_price}}</span></div>
                                 <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Product 2 -->
-                    <div class="col-sm-6 col-xl-4">
-                        <div class="product-card">
-                            <div class="product-image-area">
-                                <span class="product-badge sale">Sale</span>
-                                <div class="product-actions">
-                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
-                                </div>
-                                <img src="{% static 'images/product-details/acer_3.png' %}" alt="MSI GL66">
-                            </div>
-                            <div class="product-body">
-                                <div class="brand-tag">MSI</div>
-                                <p class="product-title">GL66 Gaming Laptop 15.6" 144Hz RTX 3070 Core i7 16GB 512GB</p>
-                            </div>
-                            <div class="product-footer">
-                                <div class="product-price">$2,245 <span class="original">$2,599</span></div>
-                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 3 -->
-                    <div class="col-sm-6 col-xl-4">
-                        <div class="product-card">
-                            <div class="product-image-area">
-                                <div class="product-actions">
-                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
-                                </div>
-                                <img src="{% static 'images/product-details/acer_4.png' %}" alt="ASUS TUF">
-                            </div>
-                            <div class="product-body">
-                                <div class="brand-tag">Asus</div>
-                                <p class="product-title">TUF FX505DT Gaming Laptop 15.6" 120Hz Ryzen 5 GTX 1650 8GB</p>
-                            </div>
-                            <div class="product-footer">
-                                <div class="product-price">$1,245</div>
-                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 4 -->
-                    <div class="col-sm-6 col-xl-4">
-                        <div class="product-card">
-                            <div class="product-image-area">
-                                <span class="product-badge sale">−10%</span>
-                                <div class="product-actions">
-                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
-                                </div>
-                                <img src="{% static 'images/product-details/mobile.png' %}" alt="Razer Blade">
-                            </div>
-                            <div class="product-body">
-                                <div class="brand-tag">Iphone 13</div>
-                                <p class="product-title">Blade 15 Base Gaming Laptop Core i7 GTX 1660Ti 16GB CNC Aluminum</p>
-                            </div>
-                            <div class="product-footer">
-                                <div class="product-price">$2,345 <span class="original">$2,599</span></div>
-                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 5 -->
-                    <div class="col-sm-6 col-xl-4">
-                        <div class="product-card">
-                            <div class="product-image-area">
-                                <span class="product-badge new">New</span>
-                                <div class="product-actions">
-                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
-                                </div>
-                                <img src="{% static 'images/product-details/hp.png' %}" alt="Laptop">
-                            </div>
-                            <div class="product-body">
-                                <div class="brand-tag">HP</div>
-                                <p class="product-title">Pavilion Gaming 15 Laptop i5-11300H GTX 1650 8GB 512GB SSD</p>
-                            </div>
-                            <div class="product-footer">
-                                <div class="product-price">$899</div>
-                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 6 -->
-                    <div class="col-sm-6 col-xl-4">
-                        <div class="product-card">
-                            <div class="product-image-area">
-                                <div class="product-actions">
-                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
-                                </div>
-                                <img src="{% static 'images/product-details/acer_4.png' %}" alt="Laptop">
-                            </div>
-                            <div class="product-body">
-                                <div class="brand-tag">Dell</div>
-                                <p class="product-title">XPS 15 OLED Laptop Core i9 RTX 3050Ti 32GB 1TB Platinum Silver</p>
-                            </div>
-                            <div class="product-footer">
-                                <div class="product-price">$1,799 <span class="original">$2,099</span></div>
-                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
-                            </div>
-                        </div>
-                    </div>
+                     {% endfor %}
                 </div>
+               
             </div>
 
         </div>

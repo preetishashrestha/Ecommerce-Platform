@@ -1,9 +1,10 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
+from django_ckeditor_5.fields import CKEditor5Field
 
 class OfferProduct(models.Model):
     title=models.CharField(max_length=200)
-    desc=models.TextField()
+    desc=CKEditor5Field('Text', config_name='extends')
     price=models.DecimalField(max_digits=8,decimal_places=2)
     image=CloudinaryField("images")
     is_available=models.BooleanField(default=True)
@@ -28,7 +29,7 @@ class Product(models.Model):
     name=models.CharField(max_length=50)
     category=models.ForeignKey(Category, on_delete=models.CASCADE) 
     subCategory=models.ForeignKey(SubCategory, on_delete=models.CASCADE)
-    desc=models.TextField()
+    desc=CKEditor5Field('Text', config_name='extends')
     image=CloudinaryField('images')
     available=models.BooleanField(default=True)
     stock=models.PositiveSmallIntegerField()
