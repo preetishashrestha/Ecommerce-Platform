@@ -21,17 +21,24 @@ def index(request):
         product=Product.objects.all()
 
     paginator=Paginator(product,5)
-    page_n=request.GET.get("page")#http://127.0.0.1:8081/
-    data=paginator.get_page(page_n)#fetch product
-    total=data.paginator.num_pages
-
-    context={
-        "offer":offer,
-        "category":category,
-        "product":product,
-        "brand":brand,
-        "data":data,
-        "num":[i+1 for i in range(total)] #[1,2,3]
+    page_n = request.GET.get("page")
+    if not page_n or not page_n.isdigit():
+        page_n = 1
+    data = paginator.get_page(page_n)
+    
+    # Get page range with ellipsis
+    page_range = paginator.get_elided_page_range(number=data.number, on_each_side=1, on_ends=1)
+    
+    # Convert ellipsis character to '...' string for easier template handling
+    page_range_with_dots = ['...' if item == '…' else item for item in page_range]
+    
+    context = {
+        "offer": offer,
+        "category": category,
+        "product": product,
+        "brand": brand,
+        "data": data,
+        "num": page_range_with_dots,  # Now contains '...' instead of '…'
     }
     return render(request,'core/index.html',context)
 
