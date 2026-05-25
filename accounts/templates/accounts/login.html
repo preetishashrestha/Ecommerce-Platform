@@ -5,8 +5,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ecommerce|Login</title>
     <style>
+        .illustration-image {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 1rem;
+    filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.1));
+}
+
+.feature-list {
+    text-align: left;
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.subtitle {
+    color: #6b7280;
+    margin-bottom: 1.8rem;
+    font-size: 0.9rem;
+    border-left: 3px solid #667eea;
+    padding-left: 0.75rem;
+}
         .cross {
             position: absolute;
             top: 0;
@@ -43,23 +73,25 @@
 <!--  aletify CSS -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css" />
 
-<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
 
 <body>
-    <div class="container my-3">
-        <div class="row">
-            <div class="col-6">
-                <h1></h1>
-                <img src="{% static 'images/ecommerce.png' %}" class="mt-4 pt-5" width="100%", height="70%" alt="">
-            </div>
-            <div class="col-6">
-                <div class="main my-3">
+    <div class="main-container">
+        <!-- Image Container (Left Side) -->
+        <div class="image-container">
+            <div class="image-content">
+                <h2>Welcome Back!</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                
+                <div class="image-illustration">
+                    <img src="{% static 'images/ecommerce.png' %}" alt="Login illustration" class="illustration-image">
+                </div>
                     
-                    <!-- From Uiverse.io by Yaya12085 -->
-                    <div class="form-container">
+                    <div class="form-container" >
                         <a href="{% url 'index' %}"><h3 class="cross"><i class="fa-solid fa-xmark"></i></h3></a>
                         <p class="title">Login</p>
-                        <form method="POST" action="{% url 'log_in' %}" form>
+                        <p class="subtitle">Login your account</p>
+                        <form method="POST" action="{% url 'log_in' %}" form id="loginForm">
                             {% csrf_token %}
                             <div class="input-group">
                                 <label for="username">Username</label>
@@ -82,7 +114,7 @@
                             <div class="forgot">
                                     <a rel="noopener noreferrer" href="{% url 'password_reset' %}">Forgot Password ?</a>
                                 </div>
-                            <button class="sign">Sign in</button>
+                            <button type="submit" class="sign"> <i class="fas fa-sign-in-alt" style="margin-right: 8px;">Sign in</i></button>
                         </form>
                         <div class="social-message">
                             <div class="line"></div>
