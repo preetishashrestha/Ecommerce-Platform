@@ -10,6 +10,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import PasswordChangeForm
+from .forms import ProfileForm
 def register(request):
     if request.method=='POST':
         fname=request.POST['fname']
@@ -95,3 +96,15 @@ def password_change(request):
             form.save()
             return redirect('log_in')
     return render(request,'accounts/password_change.html',{'form':form})
+# profile
+def profile_dashboard(request):
+    return render(request, 'profile/dashboard.html')
+
+def profile(request):
+    profile,create= Profile.objects.get_or_create(user=request.user)
+    form=ProfileForm(instance=profile)
+
+    context={
+        'form':form
+    }
+    return render(request, 'profile/profile.html', context)
