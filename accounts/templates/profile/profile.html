@@ -18,10 +18,17 @@
                     <!-- Profile Picture Column -->
                     <div class="col-md-4 text-center">
                         <div class="position-relative">
-                           
-                                <img src="{% static 'images/profile.jpg' %}" 
+
+                            {% if request.user.profile.profile_picture %}
+                              <img src="{{request.user.profile.profile_picture.url}}" 
                                      class="avatar avatar-xxl rounded-circle shadow-lg"
                                      alt="Default Profile">
+                                    {% else %}
+                                    <img src="{% static 'images/profile.jpg' %}" 
+                                     class="avatar avatar-xxl rounded-circle shadow-lg"
+                                     alt="Default Profile">
+                            {% endif %}
+                        
                            
                             <button class="btn btn-sm btn-icon-only bg-gradient-primary position-absolute bottom-0 end-0 mb-n2 me-n2 rounded-circle" 
                                     data-bs-toggle="modal" data-bs-target="#changePictureModal">
