@@ -97,14 +97,22 @@ def password_change(request):
             return redirect('log_in')
     return render(request,'accounts/password_change.html',{'form':form})
 # profile
+@login_required(login_url='log_in')
 def profile_dashboard(request):
     return render(request, 'profile/dashboard.html')
 
+@login_required(login_url='log_in')
 def profile(request):
     profile,create= Profile.objects.get_or_create(user=request.user)
     form=ProfileForm(instance=profile)
+    if request.method=="POST":
+        form=ProfileForm(request.POST, request.FILES, instance=profile)
 
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
     context={
         'form':form
     }
     return render(request, 'profile/profile.html', context)
+
