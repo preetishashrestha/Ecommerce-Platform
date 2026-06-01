@@ -80,8 +80,8 @@
                     <div class="dropdown">
                         <a href="#" class="icon-btn" data-bs-toggle="dropdown">
                             {% if request.user.is_authenticated %}
-                            {% if request.profile.profile_picture %}
-                              <img src="{{request.user.profile.profile_picture}}" height="60px" width="60px" style="border-radius: 50%; border: 2px solid blue;" alt="">
+                            {% if request.user.profile.profile_picture %}
+                              <img src="{{request.user.profile.profile_picture.url}}" height="60px" width="60px" style="border-radius: 50%; border: 2px solid blue;" alt="">
                                 {% else %}
                                     <img src="{% static 'images/pp.jpg' %}" height="60px" width="60px" style="border-radius: 50%; border: 2px solid blue;" alt="">
                 
