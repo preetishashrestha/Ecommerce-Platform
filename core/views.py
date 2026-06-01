@@ -3,6 +3,8 @@ from .models import OfferProduct, Category,SubCategory,Product,Brand,Review
 from django.db.models import Count, Prefetch, Avg
 from django.core.paginator import Paginator
 from .forms import ReviewForm
+from django.contrib.auth.decorators import login_required
+from cart.cart import Cart
 
 
 # Create your views here.
@@ -50,7 +52,7 @@ def cart(request):
 def product_detail(request, id):
     product=get_object_or_404(Product, id=id)
     reviews=product.reviews.all()
-    avg_rating=reviews.aggregate(Avg('rating'))["rating__avg"]
+    avg_rating = reviews.aggregate(Avg('rating'))["rating__avg"] or 0
     review_count=product.reviews.all().count()
 
     form=ReviewForm()
@@ -72,3 +74,51 @@ def product_detail(request, id):
         'avg_rating':round(avg_rating)
     }
     return render(request,'core/product_detail.html', context)
+
+'''
+Django Shopping Cart
+'''
+
+@login_required(login_url="/users/login")
+def cart_add(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("index")
+
+
+@login_required(login_url="log_in")
+def item_clear(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.remove(product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="log_in")
+def item_increment(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="log_in")
+def item_decrement(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.decrement(product=product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="log_in")
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect("cart_detail")
+
+
+@login_required(login_url="log_in")
+def cart_detail(request):
+    return render(request, 'core/cart.html')
+

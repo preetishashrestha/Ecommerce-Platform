@@ -53,6 +53,7 @@ EXTERNAL_APP=[
     'allauth.socialaccount',
     'social_django',
     'django_ckeditor_5',
+    'cart'
 ]
 
 INSTALLED_APPS.extend(EXTERNAL_APP)
@@ -100,10 +101,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processor.cart_total_amount'
+            
             ],
         },
     },
 ]
+
+CART_SESSION_ID = 'cart'
 
 WSGI_APPLICATION = 'shop.wsgi.application'
 
