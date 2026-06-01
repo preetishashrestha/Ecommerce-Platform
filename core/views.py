@@ -1,7 +1,8 @@
-from django.shortcuts import render,get_object_or_404
-from .models import OfferProduct, Category,SubCategory,Product,Brand
-from django.db.models import Count, Prefetch
+from django.shortcuts import render,get_object_or_404, redirect
+from .models import OfferProduct, Category,SubCategory,Product,Brand,Review
+from django.db.models import Count, Prefetch, Avg
 from django.core.paginator import Paginator
+from .forms import ReviewForm
 
 
 # Create your views here.
@@ -21,7 +22,7 @@ def index(request):
     else:
         product=Product.objects.all()
 
-    paginator=Paginator(product,5)
+    paginator=Paginator(product,1)
     page_n = request.GET.get("page")
     if not page_n or not page_n.isdigit():
         page_n = 1
@@ -45,9 +46,29 @@ def index(request):
 
 def cart(request):
     return render(request,'core/cart.html')
+
 def product_detail(request, id):
     product=get_object_or_404(Product, id=id)
+    reviews=product.reviews.all()
+    avg_rating=reviews.aggregate(Avg('rating'))["rating__avg"]
+    review_count=product.reviews.all().count()
+
+    form=ReviewForm()
+    if request.method=='POST':
+        form=ReviewForm(data=request.POST)
+        if form.is_valid():
+            review=form.save(commit=False) # delay
+            review.user=request.user
+            review.product=product
+            review.save()
+            return redirect('product_detail',id=product.id)
+
     context={
-        'product':product
+        'product':product,
+        'form':form,
+        'reviews':reviews,
+        'range': range(1,6),
+        'review_count': review_count,
+        'avg_rating':round(avg_rating)
     }
     return render(request,'core/product_detail.html', context)
