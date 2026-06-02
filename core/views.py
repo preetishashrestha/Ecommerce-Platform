@@ -36,6 +36,8 @@ def index(request):
     # Convert ellipsis character to '...' string for easier template handling
     page_range_with_dots = ['...' if item == '…' else item for item in page_range]
     
+    top_product=Product.objects.annotate(top_rating=Avg("reviews__rating")).order_by("-top_rating")[:3]
+
     context = {
         "offer": offer,
         "category": category,
@@ -43,6 +45,7 @@ def index(request):
         "brand": brand,
         "data": data,
         "num": page_range_with_dots,  # Now contains '...' instead of '…'
+        "top_product": top_product
     }
     return render(request,'core/index.html',context)
 
