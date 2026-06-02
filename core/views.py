@@ -83,7 +83,7 @@ def product_detail(request, id):
 Django Shopping Cart
 '''
 
-@login_required(login_url="/users/login")
+@login_required(login_url="log_in")
 def cart_add(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
