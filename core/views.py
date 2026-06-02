@@ -64,14 +64,15 @@ def product_detail(request, id):
             review.product=product
             review.save()
             return redirect('product_detail',id=product.id)
-
+    related_product=Product.objects.filter(subCategory=product.subCategory).exclude(id=product.id)
     context={
         'product':product,
         'form':form,
         'reviews':reviews,
         'range': range(1,6),
         'review_count': review_count,
-        'avg_rating':round(avg_rating)
+        'avg_rating':round(avg_rating) if avg_rating else 0,
+        'related_product':related_product
     }
     return render(request,'core/product_detail.html', context)
 
