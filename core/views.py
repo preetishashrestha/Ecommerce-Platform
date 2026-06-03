@@ -138,7 +138,7 @@ def generate_signature(data, secret):
 
 @login_required(login_url="log_in")
 def cart_detail(request):
-    cart=request.session.get("cart")
+    cart = request.session.get("cart", {})
     amount=0
 
     for item in cart.values():

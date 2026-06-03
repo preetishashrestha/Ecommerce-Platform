@@ -79,7 +79,7 @@
 						{% with tax=cart_total_amount|multiply:0.13 %}
 						  
 						
-						<li>Cart Sub Total <span>Rs. {{cart_total_amount|float_format:2}}</span></li>
+						<li>Cart Sub Total <span>Rs. {{cart_total_amount|floatformat:2}}</span></li>
 						<li>Eco Tax(13%) <span>Rs. {{tax}}</span></li>
 						<li>Shipping Cost <span>Free</span></li>
 						<li>Total <span>Rs. {{cart_total_amount|add:tax}}</span></li>
