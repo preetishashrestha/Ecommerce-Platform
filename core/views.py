@@ -158,8 +158,8 @@ def cart_detail(request):
     "product_code": "EPAYTEST",
     "product_service_charge": 0,
     "product_delivery_charge": 0,
-    "success_url": "http://127.0.0.1:8000/esewa/success/",
-    "failure_url": "http://127.0.0.1:8000/esewa/failure/",
+    "success_url": "http://127.0.0.1:8000/payments/success_url",
+    "failure_url": "http://127.0.0.1:8000/payments/failure_url",
     "signed_field_names": "total_amount,transaction_uuid,product_code",
     
     }

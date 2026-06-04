@@ -53,7 +53,8 @@ EXTERNAL_APP=[
     'allauth.socialaccount',
     'social_django',
     'django_ckeditor_5',
-    'cart'
+    'cart',
+    'payments'
 ]
 
 INSTALLED_APPS.extend(EXTERNAL_APP)
