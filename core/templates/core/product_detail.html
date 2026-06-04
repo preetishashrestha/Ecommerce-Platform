@@ -1,8 +1,8 @@
-{% extends "base.html" %}   
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
-  
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -36,7 +36,7 @@
                         <img src="{{i.image.url}}" alt="Product image">
                     </div>
                     {% endfor %}
-                    
+
                 </div>
 
                 <!-- Thumbnail slider -->
@@ -58,16 +58,17 @@
                         <div class="reviews-counter">
                             <div class="rate">
                                 {% for i in range %}
-                                   <i class="fa {% if avg_rating >= i %} 
+                                <i class="fa {% if avg_rating >= i %} 
                                     fa-star {% else %} fa-star-o
                                    {% endif %} text-warning"></i>
                                 {% endfor %}
-                               
-                            
+
+
                             </div>
                             <span>{{review_count}}</span>
                         </div>
-                        <div class="product-price-discount"><span>Rs.{{product.price}}</span><span class="line-through">Rs.{{product.mark_Price}}</span>
+                        <div class="product-price-discount"><span>Rs.{{product.price}}</span><span
+                                class="line-through">Rs.{{product.mark_Price}}</span>
                         </div>
                     </div>
                     <p>{{product.desc|safe}}</p>
@@ -90,18 +91,20 @@
                             </select>
                         </div>
                     </div>
-                    {% for i in data %}
+
                     <div class="product-count">
                         <label for="size">Quantity</label>
-                        <form action="{% url 'cart_add_detail' i.id %}" method="POST" class="display-flex">
+                        <form action="{% url 'cart_add_detail' product.id %}" method="POST" class="display-flex">
                             {% csrf_token %}
                             <div class="qtyminus">-</div>
-                            <input type="text" name="quantity" value="1" class="qty">
+                            <input type="text" name="quantity" value="1" class="qty" height="10px">
                             <div class="qtyplus">+</div>
+                            <button type="submit" class="round-black-btn">
+                                <i class="fas fa-bag-shopping"></i> Add to Cart
+                            </button>
                         </form>
-                        <button class="btn-add-cart">Add to Cart</button>
                     </div>
-                    {% endfor %}
+
                 </div>
             </div>
         </div>
@@ -132,10 +135,11 @@
                         <!-- Review 1 -->
                         <div class="review-card">
                             {% for review in reviews %}
-                              
-                            
+
+
                             <div class="review-header">
-                                <div class="reviewer-avatar" style="background:#3B6FA0">{{request.user.first_name|slice:":1"}}{{request.user.last_name|slice:":1"}}</div>
+                                <div class="reviewer-avatar" style="background:#3B6FA0">
+                                    {{request.user.first_name|slice:":1"}}{{request.user.last_name|slice:":1"}}</div>
                                 <div class="reviewer-info">
                                     <div class="reviewer-name">{{request.user.username}}</div>
                                     <div class="review-date">{{request.created_at}}</div>
@@ -143,17 +147,17 @@
                             </div>
                             <div class="review-stars">
                                 {% for i in range %}
-                                  <i class="fa {% if review.rating >= i %}
+                                <i class="fa {% if review.rating >= i %}
                                     fa-star {% else %} fa-star-o
                                     
                                   {% endif %} text-warning"></i>
                                 {% endfor %}
-                               
+
                             </div>
                             <p class="review-body">{{ review.feedback }}</p>
                             <span class="review-tag" style="background:#F0FBF4;color:#2E7D52">Recommended</span>
                             {% endfor %}
-                        </div>               
+                        </div>
                     </div>
                     {% if request.user.is_authenticated %}
                     <form class="review-form" method="POST" action="{% url 'product_detail' product.id %}">
@@ -173,7 +177,7 @@
                             <label>Your message</label>
                             <textarea class="form-control" name="feedback" rows="10"></textarea>
                         </div>
-                        
+
                         <button class="round-black-btn">Submit Review</button>
                     </form>
 
@@ -248,6 +252,3 @@
     crossorigin="anonymous"></script>
 <script src="{% static 'js/product_detail.js' %}"></script>
 {% endblock content %}
-
-
-

@@ -1115,6 +1115,7 @@ img {
 
 .qty-input {
   width: 70px;
+   height: 40px;
   text-align: center;
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
