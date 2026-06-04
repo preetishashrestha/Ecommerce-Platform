@@ -93,6 +93,13 @@ def cart_add(request, id):
     cart.add(product=product)
     return redirect("index")
 
+@login_required(login_url="log_in")
+def cart_add_detail(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("cart")
+
 
 @login_required(login_url="log_in")
 def item_clear(request, id):

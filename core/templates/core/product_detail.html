@@ -90,15 +90,18 @@
                             </select>
                         </div>
                     </div>
+                    {% for i in data %}
                     <div class="product-count">
                         <label for="size">Quantity</label>
-                        <form action="#" class="display-flex">
+                        <form action="{% url 'cart_add_detail' i.id %}" method="POST" class="display-flex">
+                            {% csrf_token %}
                             <div class="qtyminus">-</div>
                             <input type="text" name="quantity" value="1" class="qty">
                             <div class="qtyplus">+</div>
                         </form>
-                        <a href="#" class="round-black-btn">Add to Cart</a>
+                        <button class="btn-add-cart">Add to Cart</button>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
