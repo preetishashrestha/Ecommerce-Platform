@@ -2,7 +2,6 @@ import base64
 import json
 import hashlib
 import hmac
-
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import *
@@ -41,6 +40,15 @@ def success_esewa(request):
 
         txn,created=Transaction.objects.get_or_create(transaction_uuid=payload['transaction_uuid'], transaction_code=payload['transaction_code'],product_code=payload['product_code'],
             total_amount=payload['total_amount'],user=request.user,status=payload['status'])
+        order,created=Order.objects.get_or_create(user=request.user,transaction_uuid=payload['transaction_uuid'],total_amount=payload['total_amount'],status=payload['status'])
+     
+        cart=request.session.get('cart')
+        print("cart data:", cart)
+     
+        for item in cart.values():
+                OrderItem.objects.create(order=order,product_id=item['product_id'],price=item['price'],quantity=item['quantity'])
+                request.session["cart"]={}
+
         return render(request,'success_esewa.html',{'txn':txn})
 
 def failure_esewa(request):
