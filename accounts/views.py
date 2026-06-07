@@ -11,6 +11,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import PasswordChangeForm
 from .forms import ProfileForm
+from payments.models import Order
 def register(request):
     if request.method=='POST':
         fname=request.POST['fname']
@@ -116,3 +117,7 @@ def profile(request):
     }
     return render(request, 'profile/profile.html', context)
 
+@login_required(login_url='log_in')
+def my_order(request):
+    orders=Order.objects.filter(user=request.user)
+    return render(request, 'profile/my_order.html',{'orders':orders})
