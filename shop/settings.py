@@ -327,4 +327,6 @@ JAZZMIN_SETTINGS = {
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
     },
+
+"show_ui_builder":True,
 }   
