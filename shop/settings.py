@@ -288,3 +288,43 @@ CKEDITOR_5_CONFIGS = {
 
 # Define a constant in settings.py to specify file upload permissions
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"  # Possible values: "staff", "authenticated", "any"
+
+JAZZMIN_SETTINGS = {
+    "welcome_sign": "Welcome to the Shop",
+    "login_logo": 'images/product-details/acer_2.png',
+
+    "copyright": "Preetisha Shrestha",
+    "custom_css":'css/admin.css',
+
+    # Links to put along the top menu
+    "topmenu_links": [
+
+        # Url that gets reversed (Permissions can be added)
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+
+        # external url that opens in a new window (Permissions can be added)
+        {"name": "Preetisha shrestha", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+
+        # model admin to link to (Permissions checked against model)
+        {"model": "core.Category"},
+
+        # App with dropdown menu to all its models pages (Permissions checked against models)
+        {"app": "core"},
+    ],
+
+    #############
+    # User Menu #
+    #############
+
+    # Additional links to include in the user menu on the top right ("app" url type is not allowed)
+    "usermenu_links": [
+        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+        {"model": "auth.user"}
+    ],
+
+ "icons": {
+        "auth": "fa-brands fa-product-hunt",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+}   
